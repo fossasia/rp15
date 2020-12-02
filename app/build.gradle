@@ -152,7 +152,7 @@ dependencies {
     def roomVersion = "2.2.5"
     def ktx_version = "1.1.0"
     def ktx2_version = "2.2.0"
-    def nav_version = "2.3.1"
+    def nav_version = "2.3.2"
     def anko_version = "0.10.8"
     def paging_version = "2.1.2"
 
