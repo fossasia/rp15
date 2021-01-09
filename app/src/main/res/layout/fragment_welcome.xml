@@ -49,7 +49,7 @@
     <ImageView
         android:layout_width="@dimen/avatar_medium"
         android:layout_height="@dimen/avatar_medium"
-        android:layout_above="@+id/pickCityButton"
+        android:layout_above="@+id/currentLocation"
         android:layout_below="@id/textLinearLayout"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/ic_location_world"
@@ -68,8 +68,8 @@
             android:layout_width="@dimen/item_image_view_medium"
             android:layout_height="@dimen/item_image_view_medium"
             android:layout_margin="@dimen/layout_margin_medium"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_location_pin"/>
+            app:srcCompat="@drawable/ic_location_pin"
+            app:tint="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
