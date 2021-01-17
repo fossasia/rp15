@@ -20,6 +20,10 @@ import org.fossasia.openevent.general.utils.extensions.withDefaultSchedulers
 import retrofit2.HttpException
 import timber.log.Timber
 
+const val HEADER_TYPE = "headerType"
+const val JWT_ACCESS_TOKEN = "jwtAccessToken"
+const val JWT_REFRESH_TOKEN = "jwtRefreshToken"
+
 class StartupViewModel(
     private val preference: Preference,
     private val resource: Resource,
@@ -114,6 +118,25 @@ class StartupViewModel(
                 Timber.d("Settings fetched successfully")
             }, {
                 Timber.e(it, "Error in fetching settings form API")
+            })
+    }
+
+    fun checkAccessToken() {
+        if (!authHolder.isLoggedIn() || authHolder.isTokenValid())
+            return
+        preference.putString(HEADER_TYPE, JWT_REFRESH_TOKEN)
+        compositeDisposable += authService.refreshToken()
+            .withDefaultSchedulers()
+            .doFinally {
+                preference.putString(HEADER_TYPE, JWT_ACCESS_TOKEN)
+            }.subscribe({
+                authHolder.accessToken = it.accessToken
+            }, {
+                if (it is HttpException) {
+                    if (it.code() == HttpErrors.UNAUTHORIZED)
+                        logoutAndRefresh()
+                }
+                Timber.e(it, "Error refreshing token, logged out.")
             })
     }
 }

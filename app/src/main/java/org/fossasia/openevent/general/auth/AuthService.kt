@@ -9,7 +9,6 @@ import org.fossasia.openevent.general.auth.change.Password
 import org.fossasia.openevent.general.auth.forgot.Email
 import org.fossasia.openevent.general.auth.forgot.RequestToken
 import org.fossasia.openevent.general.auth.forgot.RequestTokenResponse
-import org.fossasia.openevent.general.event.EventApi
 import org.fossasia.openevent.general.event.EventDao
 import org.fossasia.openevent.general.order.OrderDao
 import timber.log.Timber
@@ -20,8 +19,7 @@ class AuthService(
     private val userDao: UserDao,
     private val orderDao: OrderDao,
     private val attendeeDao: AttendeeDao,
-    private val eventDao: EventDao,
-    private val eventApi: EventApi
+    private val eventDao: EventDao
 ) {
     fun login(username: String, password: String): Single<LoginResponse> {
         if (username.isEmpty() || password.isEmpty())
@@ -29,7 +27,8 @@ class AuthService(
 
         return authApi.login(Login(username, password))
                 .map {
-                    authHolder.token = it.accessToken
+                    authHolder.accessToken = it.accessToken
+                    authHolder.refreshToken = it.refreshToken
                     it
                 }
     }
@@ -66,7 +65,7 @@ class AuthService(
 
     fun logout(): Completable {
         return Completable.fromAction {
-            authHolder.token = null
+            authHolder.accessToken = null
             userDao.deleteUser(authHolder.getId())
             orderDao.deleteAllOrders()
             attendeeDao.deleteAllAttendees()
@@ -121,5 +120,9 @@ class AuthService(
 
     fun resetPassword(requestPasswordReset: RequestPasswordReset): Single<ResetPasswordResponse> {
         return authApi.resetPassword(requestPasswordReset)
+    }
+
+    fun refreshToken(): Single<LoginResponse> {
+        return authApi.refreshToken()
     }
 }

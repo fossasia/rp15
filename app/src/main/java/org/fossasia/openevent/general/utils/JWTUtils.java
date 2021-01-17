@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class JWTUtils {
 
-    public static SparseArrayCompat<String> decode(String token) {
+    private static SparseArrayCompat<String> decode(String token) {
         SparseArrayCompat<String> decoded = new SparseArrayCompat<>(2);
 
         String[] split = token.split("\\.");
@@ -17,7 +17,7 @@ public class JWTUtils {
         return decoded;
     }
 
-    public static long getExpiry(String token) throws JSONException {
+    private static long getExpiry(String token) throws JSONException {
         SparseArrayCompat<String> decoded = decode(token);
 
         // We are using JSONObject instead of GSON as it takes about 5 ms instead of 150 ms taken by GSON

@@ -49,7 +49,7 @@ class OrderDetailsViewModel(
             })
     }
 
-    fun getToken() = authHolder.getAuthorization().nullToEmpty()
+    fun getToken() = authHolder.getAccessAuthorization().nullToEmpty()
 
     fun loadAttendeeDetails(orderId: Long) {
         if (orderId == -1L) return

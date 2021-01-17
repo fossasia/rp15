@@ -104,6 +104,7 @@ class EventsFragment : Fragment(), BottomIconDoubleClick {
         rootView.eventsRecycler.adapter = eventsListAdapter
         rootView.eventsRecycler.isNestedScrollingEnabled = false
 
+        startupViewModel.checkAccessToken()
         startupViewModel.syncNotifications()
         startupViewModel.fetchSettings()
         handleNotificationDotVisibility(

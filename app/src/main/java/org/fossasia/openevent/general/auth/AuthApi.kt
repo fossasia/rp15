@@ -16,7 +16,7 @@ import retrofit2.http.Path
 
 interface AuthApi {
 
-    @POST("../auth/session")
+    @POST("auth/login")
     fun login(@Body login: Login): Single<LoginResponse>
 
     @GET("users/{id}")
@@ -51,4 +51,7 @@ interface AuthApi {
 
     @DELETE("users/{id}")
     fun deleteAccount(@Path("id") userId: Long): Completable
+
+    @POST("/auth/token/refresh")
+    fun refreshToken(): Single<LoginResponse>
 }
