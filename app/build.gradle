@@ -190,7 +190,7 @@ dependencies {
     playStoreImplementation 'com.google.android.gms:play-services-location:17.1.0'
 
     //Smart Auth Play Service
-    playStoreImplementation 'com.google.android.gms:play-services-auth:18.1.0'
+    playStoreImplementation 'com.google.android.gms:play-services-auth:19.2.0'
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
